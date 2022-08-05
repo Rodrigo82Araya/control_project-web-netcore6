@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="<?=$lng?>" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg">
+<head>
+        
+    <title>Dashboard | Valuedata</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+
+    <!-- jsvectormap css -->
+    <link href="{% static 'libs/jsvectormap/css/jsvectormap.min.css' %}" />
+
+    <!--Swiper slider css-->
+    <link href="{% static 'libs/swiper/swiper-bundle.min.css' %}"  />
+
+    <!-- Layout config Js -->
+    <script src="{% static 'js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{% static 'css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{% static 'css/custom.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        {% include 'includes/header.html' %}
+    
+        <!-- ========== App Menu ========== -->
+        {% include 'includes/menu.html' %}
+        <!-- Left Sidebar End -->
+
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    {% block content %}
+                    {% endblock  %}
+                <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+            {% include 'includes/footer.html' %}
+        
+            </div>
+        <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+        
+        {% include 'includes/menu_lateral.html' %}
+        
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'libs/node-waves/waves.min.js' %}"></script>
+    <script src="{% static 'libs/feather-icons/feather.min.js' %}"></script>
+    <script src="{% static 'js/pages/plugins/lord-icon-2.1.0.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'libs/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'libs/jsvectormap/js/jsvectormap.min.js' %}"></script>
+    <script src="{% static 'libs/jsvectormap/maps/world-merc.js' %}"></script>
+    <script src="{% static 'libs/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/pages/dashboard-ecommerce.init.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
+
+

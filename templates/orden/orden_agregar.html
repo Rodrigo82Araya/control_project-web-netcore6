@@ -1,0 +1,72 @@
+{% extends 'index.html' %} {% load static %} 
+
+{% block content %}
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Agregar Orden</h4>
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'orden_listar' %}">Control</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'orden_listar' %}">Listado de Ordenes</a></li>
+                    <li class="breadcrumb-item active">Agregar Orden</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-xxl-6">
+        <div class="card">
+            
+
+            <div class="card-body">
+                <p class="text-muted">Compiece el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
+                <div class="live-preview">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="firstNameinput" class="form-label">Nombre</label>
+                                    {{ form.nombre }}
+                                </div>
+                            </div><!--end col-->
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="lastNameinput" class="form-label">Descripción</label>
+                                    {{ form.descripcion }}
+                                </div>
+                            </div>
+                            
+
+                            
+                            <!--end col-->                            
+                            <div class="col-lg-12">
+                                <div class="text-muted" style="float: left;">
+                                    <a href="{% url 'orden_listar' %}" class="btn btn-success">Volver</a>
+                                </div>
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </form>
+
+                    {{ mensaje }}
+                </div>
+                
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+</div><!--end row-->
+
+{% endblock %}
