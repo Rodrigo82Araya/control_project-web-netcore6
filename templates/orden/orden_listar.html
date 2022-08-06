@@ -31,9 +31,16 @@
         })
     }
 </script>
-<style> .paginador li { display: inline-block; }</style>
+<style>
+    .paginador{
+        height: 18px;
+    }
+    .paginador li { 
+        display: inline-block; 
+    }
+</style>
 
-<!-- start page title -->
+<!-- NAVEGADOR -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -48,8 +55,9 @@
         </div>
     </div>
 </div>
-<!-- end page title -->
+<!-- END NAVEGADOR -->
 
+<!-- LIST -->
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -115,79 +123,17 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="d-flex justify-content-start">
-                        Cantidad de filas: {{ cantidad }}
-                    </div>
 
-                    {% if paginator.num_pages > 1%}
-                    <div class="d-flex justify-content-end">
-                        <div class="pagination-wrap hstack gap-2">
-                            <ul class="paginador">
-                            {% if entity.has_previous %}
-                            <a class="page-item pagination-prev" href="?page={{ entity.previous_page_number }}#pagtable">
-                                Anterior
-                            </a>
-                            {% endif %}
-                            {% for page in paginator.page_range %}
-                                {% if forloop.last and page != entity.number and paginator.num_pages > 7 %} 
-                                    {% if entity.next_page_number != paginator.num_pages%}
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page={{ entity.number | add:1}}#pagtable">...</a>
-                                    </li>
-                                    {% endif %}
-                                <li class="page-item">
-                                        <a class="page-link" href="?page={{paginator.num_pages}}#pagtable">{{paginator.num_pages}}</a>
-                                </li>
-                                {% endif %}
-                                {% if page == entity.number and page > 7 %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ page | add:-1 }}#pagtable">...</a>
-                                </li>    
-                                {% endif %}
-                                {% if page < 7 or page == entity.number %}
-                                <li class="page-item {% if page == entity.number %}active{% endif %}">
-                                    <a class="page-link" href="?page={{ page }}#pagtable">{{ page }}</a>
-                                </li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if entity.has_next %}
-                                <a class="page-item pagination-next" href="?page={{ entity.next_page_number }}#pagtable">
-                                    Siguiente
-                                </a>
-                                
-                            {% endif %}
-                            
+                    <div class="row g-4 mb-0">
+                        <div class="col-sm">
+                            <div style="color:#69747E;padding-top:6px"> Mostrando {{ filaInicio }} a {{ filaFin }} de {{ totalFilas }} filas </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-center d-sm-none">            
-                        {% if entity.has_previous %}                            
-                            <a class="page-item pagination-prev disabled" href="?page={{ entity.previous_page_number }}#pagtable">
-                                Anterior
-                            </a>
-                        {% endif %}
-                        {% if entity.has_next %}
-                            <a class="page-item pagination-next" href="?page={{ entity.next_page_number }}#pagtable">
-                                Siguiente
-                            </a>
-                            
-                        {% endif %}
-                        <br>
-                        <br>
-                    </div>
-                    {% endif %}
-
-                    <!-- <div class="d-flex justify-content-end">
-                        <div class="pagination-wrap hstack gap-2">
-                            <a class="page-item pagination-prev disabled" href="#">
-                                Previous
-                            </a>
-                            <ul class="pagination listjs-pagination mb-0"></ul>
-                            <a class="page-item pagination-next" href="#">
-                                Next
-                            </a>
+                        <div class="col-sm-auto">
+                            <!-- PAGINATOR=================================================================== -->
+                            {% include 'includes/paginator.html' %}
+                            <!-- END PAGINATOR=================================================================== -->
                         </div>
-                    </div> -->
+                    </div>                    
                 </div>
             </div><!-- end card -->
         </div>
@@ -195,33 +141,8 @@
     </div>
     <!-- end col -->
 </div>
-<!-- end row -->
+<!-- END LIST -->
 
-<!-- VENTANA ELIMINAR -->
-<div class="modal fade zoomIn" id="deleteRecordModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mt-2 text-center">
-                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
-                        colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                        <h4>¿Estas seguro?</h4>
-                        <p class="text-muted mx-4 mb-0">¿Estás seguro de que quieres eliminar este registro?</p>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn w-sm btn-danger " id="delete-record">Si, borrar!</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--END MODAL -->
 {% endblock %}
 
 {% block scripts_inf %}
