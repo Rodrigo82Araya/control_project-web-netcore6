@@ -6,18 +6,21 @@ from .models import Orden
 
 #ORDENES====================================================================================
 def orden_listar(request):
-    ordenes = Orden.objects.all().filter(activo=True)
+    ordenes_all = Orden.objects.all().filter(activo=True)
     pages = request.GET.get('page',1)
-
+   
+        
     try:
-        paginator = Paginator(ordenes, 5)
+        paginator = Paginator(ordenes_all, 5)
         ordenes = paginator.page(pages)
+        
     except:
         raise Http404
 
     data={
         'entity':ordenes,
-        'paginator':paginator
+        'paginator':paginator,
+        'cantidad':ordenes_all.count(),
     }
     return render(request, 'orden/orden_listar.html',data)
 
