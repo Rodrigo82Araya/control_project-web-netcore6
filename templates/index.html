@@ -28,6 +28,9 @@
     <link href="{% static 'css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{% static 'css/custom.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
+    {% block scripts_sup %}
+    {% endblock  %}
 </head>
 
 <body>
@@ -82,6 +85,10 @@
     <script src="{% static 'libs/swiper/swiper-bundle.min.js' %}"></script>
     <script src="{% static 'js/pages/dashboard-ecommerce.init.js' %}"></script>
     <script src="{% static 'js/app.js' %}"></script>
+
+    {% block scripts_inf %}
+    {% endblock  %}
+
 </body>
 </html>
 

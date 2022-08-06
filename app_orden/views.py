@@ -56,4 +56,5 @@ def orden_modificar(request, id):
 def orden_eliminar(request, id):
     ordenes = get_object_or_404(Orden, id=id)
     ordenes.delete()
-    return render(request, 'orden/orden_listar.html')
+    return redirect(to='orden_listar')
+    #return render(request, 'orden/orden_listar.html')
