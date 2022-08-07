@@ -3,7 +3,7 @@ from app_accounts.models import Account
 
 class Orden(models.Model):
     
-    nombre = models.CharField(max_length=50, unique=True)
+    nombre = models.CharField(max_length=30, unique=True,error_messages = {'unique':"El nombre ingresado ya existe, debe ingresar uno distinto." })
     descripcion = models.CharField(max_length=255, blank=True)
     activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
     prioridad =  models.BooleanField(default=False)

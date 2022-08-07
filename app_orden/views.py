@@ -6,8 +6,8 @@ from .models import Orden
 
 #ORDENES====================================================================================
 def orden_listar(request):
-    ordenes_all = Orden.objects.all().filter(activo=True)
-    filas = 4
+    ordenes_all = Orden.objects.all().filter(activo=True).order_by('id').reverse()
+    filas = 7
     pages = request.GET.get('page',1)    
         
     try:

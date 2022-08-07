@@ -28,6 +28,7 @@
         </button>
     </div>
 
+    <!-- MENÚ -->
     <div id="scrollbar">
         <div class="container-fluid">
 
@@ -36,12 +37,14 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span>Menú</span></li>
 
+                <!-- MENÚ DASHBOARD ==================================== -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{% url 'home' %}">
                         <i class="ri-honour-line"></i> <span>Dashboard</span>
                     </a>
                 </li>
 
+                <!-- MENÚ ORDENES ==================================== -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarDashboards">
@@ -58,8 +61,11 @@
                             </li>                            
                         </ul>
                     </div>
-                </li> <!-- end Dashboard Menu -->
+                </li> 
 
+                
+
+                <!-- MENÚ USUARIOS ==================================== -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarAuth">
@@ -233,6 +239,7 @@
                     </div>
                 </li>
 
+                <!-- MENÚ REPORTES ==================================== -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarCharts" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarCharts">
@@ -315,7 +322,22 @@
                     </div>
                 </li>
 
-                <li class="menu-title"><i class="ri-more-fill"></i> <span>Otros menus</span></li>
+                <!-- MENÚ MANTENEDORES ==================================== -->
+                <li class="menu-title"><i class="ri-more-fill"></i> <span>Mantenedores</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{% url 'home' %}">
+                        <i class="ri-honour-line"></i> <span>Areas</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{% url 'home' %}">
+                        <i class="ri-honour-line"></i> <span>Colaboradores</span>
+                    </a>
+                </li>
+
+                <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span>Components</span></li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
@@ -594,37 +616,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li>                
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarLayouts">
-                        <i class="ri-layout-3-line"></i> <span>Layouts</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="layouts-horizontal.php" target="_blank"
-                                    class="nav-link"><?=$lang['t-horizontal']?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-detached.php" target="_blank"
-                                    class="nav-link"><?=$lang['t-detached']?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-two-column.php" target="_blank"
-                                    class="nav-link"><?=$lang['t-two-column']?></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="layouts-vertical-hovered.php" target="_blank"
-                                    class="nav-link"><?=$lang['t-hovered']?></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> <!-- end Dashboard Menu -->
-
-                
-                
+                                
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="sidebarPages">
@@ -682,8 +676,7 @@
                     </div>
                 </li>
 
-                <li class="nav-item"> <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse"
-                        role="button" aria-expanded="false" aria-controls="sidebarLanding">
+                <li class="nav-item"> <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse"                        role="button" aria-expanded="false" aria-controls="sidebarLanding">
                         <i class="ri-rocket-line"></i> <span data-key="t-landing">Landing</span>
                         <span class="badge badge-pill bg-danger"><?=$lang['t-new']?></span>
                     </a>
@@ -699,7 +692,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="menu-title"><i class="ri-more-fill"></i> <span>Components</span></li>
+                
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUI" data-bs-toggle="collapse" role="button"
@@ -913,9 +906,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-
-                
+                </li>                
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarIcons" data-bs-toggle="collapse" role="button"
@@ -1006,7 +997,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
 
             </ul>
         </div>

@@ -84,9 +84,11 @@
                         <table class="table align-middle table-nowrap" id="customerTable">
                             <thead class="table-light">
                                 <tr>
+                                    <th class="sort" data-sort="customer_name">ID</th>
                                     <th class="sort" data-sort="customer_name">Nombre</th>
-                                    <th class="sort" data-sort="email">Descripción</th>
+                                    <th class="sort" data-sort="email">Descripción</th>                                    
                                     <th class="sort" data-sort="date">Fecha ingreso</th>
+                                    <th class="sort" data-sort="date">Alta Prioridad?</th>
                                     <th class="sort" data-sort="date">Estado</th>
                                     <th class="sort" data-sort="action">Acciones</th>
                                     </tr>
@@ -94,10 +96,24 @@
                             <tbody class="list form-check-all">
                                 {% for o in entity %}
                                 <tr>
+                                    <td class="customer_name">{{ o.id }}</td>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                    <td class="customer_name">{{ o.nombre | title }}</td>
-                                    <td class="email">{{ o.descripcion | title }}</td>                                    
+                                    <td class="customer_name">{{ o.nombre | title}}</td>
+                                    <td class="email">
+                                        {{ o.descripcion | title | slice:":30" }}
+                                        {% if o.descripcion|length > 30 %}
+                                            ...
+                                        {% endif %}
+
+                                    </td> 
                                     <td class="date">{{ o.fecha_creacion | date:"d-m-Y H:i" }}</td>
+                                    <td class="status">
+                                        {% if o.prioridad %}
+                                            <i class="ri-checkbox-circle-line align-middle text-success"></i>
+                                        {% else %}
+                                            <i class="ri-close-circle-line align-middle text-danger"></i>
+                                        {% endif %}
+                                    </td>
                                     <td class="status"><span class="badge badge-soft-success text-uppercase">Activo</span></td>
                                     <td>
                                         <div class="d-flex gap-2 float-end">
