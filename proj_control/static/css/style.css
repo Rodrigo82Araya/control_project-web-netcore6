@@ -17,3 +17,11 @@
 .modal-header svg{
     margin-right:5px;
 }
+
+/*PAGINADOR*/
+.paginador{
+    height: 18px;
+}
+.paginador li { 
+    display: inline-block; 
+}

@@ -1,54 +1,17 @@
 {% extends 'index.html' %} {% load static %} 
 {% block title %} Ordenes {% endblock %}
 
-{% block scripts_sup %}
-    <!-- LISTADO -->
-    <link href="{% static 'libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block content %}
-<script>
-    function submitResult(e) {
-        e.preventDefault();
-        
-        var url = e.currentTarget.getAttribute('href');
-        Swal.fire({
-            title: 'Realmente deseas eliminar esta orden?',
-            text: "Esto no se podra revertir!",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            
-            if (result.value) {
-                window.location.href=url;
-            }else {
-                return false;
-            }
-        })
-    }
-</script>
-<style>
-    .paginador{
-        height: 18px;
-    }
-    .paginador li { 
-        display: inline-block; 
-    }
-</style>
 
 <!-- NAVEGADOR -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Listado de Ordenes</h4>
+            <h4 class="mb-sm-0">{{ pageAccion }} de {{ pageTituloPlu }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item active">Control</li>
-                    <li class="breadcrumb-item active">Ordenes</li>
+                    <li class="breadcrumb-item active">{{ pageAccion }} de {{ pageTituloPlu }}</li>
                     <li class="helpnav">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -66,13 +29,14 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-
             <div class="card-body">
                 <div id="customerList">
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <a href="{% url 'orden_agregar' %}" class="btn btn-success add-btn"><i class="ri-add-line align-bottom me-1"></i> Agregar orden</a>
+                                <a href="{% url 'orden_agregar' %}" class="btn btn-success add-btn">
+                                    <i class="ri-add-line align-bottom me-1"></i> Agregar {{ pageTituloPlu }}
+                                </a>
                             </div>
                         </div>
                         <div class="col-sm">
@@ -126,7 +90,7 @@
                                                 <a href="{% url 'orden_modificar' o.id %}" class="btn btn-sm btn-success edit-item-btn">Modificar</a>
                                             </div>
                                             <div class="remove">
-                                                <a href="{% url 'orden_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return submitResult(event)">Eliminar</a>
+                                                <a href="{% url 'orden_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event)">Eliminar</a>
                                             </div>
                                         </div>
                                     </td>
@@ -164,40 +128,9 @@
 </div>
 <!-- END LIST -->
 
-<!-- VENTANAS MODALES -->
-<div id="top-rightmodal-ayuda" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-right">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    <h5 class="modal-title" id="myModalLabel"> Ayuda</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h5 class="fs-15">
-                        Agregar orden
-                    </h5>
-                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
-                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
-                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                    
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal-dialog -->
-</div>
+ <!-- MODAL AYUDA =================================================================== -->
+ {% include 'includes/modal_ayuda.html' %}
+
 
 {% endblock %}
 
-{% block scripts_inf %}
-    <!-- LISTADO -->
-    <script src="{% static 'libs/prismjs/prism.js' %}"></script>
-    <script src="{% static 'libs/list.js/list.min.js' %}"></script>
-    <script src="{% static 'libs/list.pagination.js/list.pagination.min.js' %}"></script>
-    <script src="{% static 'js/pages/listjs.init.js' %}"></script>
-    <script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
-{% endblock %}
