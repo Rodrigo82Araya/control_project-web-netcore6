@@ -1,38 +1,28 @@
-{% if msg_tipo == 1 %}
-    <div class="col-md-12">
-        <div class="alert alert-secondary alert-dismissible alert-label-icon rounded-label fade show" role="alert">
-            <i class="ri-checkbox-circle-fill label-icon"></i><strong>Información</strong> - {{ msg_text }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-{% elif msg_tipo == 2 %}
-    <div class="col-md-12">
-        <div class="alert alert-danger alert-dismissible alert-additional fade show" role="alert">
-            <div class="alert-body">
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                <div class="d-flex">
-                    <div class="flex-shrink-0 me-3">   
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="alert-heading">{{ msg_text }}</h5>
-                        <p class="mb-0">{{ form.errors }}</p>
+{% if messages %}
+    <div class="col-md-12" id="message">
+        {% for message in messages %}
+
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger alert-dismissible alert-additional fade show" role="alert">
+                    <div class="alert-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">   
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="alert-heading">{{ message }}</h5>
+                                <p class="mb-0">{{ form.errors }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div> 
-    </div>
-{% endif %}
-
-
-{% if messages %}
-
-  <div id="message"  class="container">
-    {% for message in messages %}
-      <div  {% if message.tags %}    class="alert alert-{{ message.tags }}"  {% endif %}  role="alert">
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Importante: {% endif %}
-        {{ message }}
-      </div>
-    {% endfor %}      
-  </div>
+            {% else %}
+                <div class="alert alert-secondary alert-dismissible alert-label-icon rounded-label fade show" role="alert">
+                    <i class="ri-checkbox-circle-fill label-icon"></i><strong>Información</strong> - {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>    
 {% endif %}
