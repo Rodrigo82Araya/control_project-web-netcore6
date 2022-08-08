@@ -47,11 +47,16 @@
             <h4 class="mb-sm-0">Listado de Ordenes</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">Control</li>
+                    <li class="breadcrumb-item active">Control</li>
                     <li class="breadcrumb-item active">Ordenes</li>
+                    <li class="helpnav">
+                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        </a>
+                    </li>
                 </ol>
             </div>
-
+            
         </div>
     </div>
 </div>
@@ -158,6 +163,33 @@
     <!-- end col -->
 </div>
 <!-- END LIST -->
+
+<!-- VENTANAS MODALES -->
+<div id="top-rightmodal-ayuda" class="modal fade" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-right">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <h5 class="modal-title" id="myModalLabel"> Ayuda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="fs-15">
+                        Agregar orden
+                    </h5>
+                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
+                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
+                    <p class="text-muted">Comience el proceso agregando una orden, en esta posteriormente se podra agregar y crear seguimientos y asignar a las areas correspondientes.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 {% endblock %}
 

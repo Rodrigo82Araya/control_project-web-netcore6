@@ -1,0 +1,19 @@
+/*MENSAJES ALERT*/
+.errorlist{
+    list-style-type: none;
+}
+.errorlist li:first-letter{
+    text-transform: uppercase;
+}
+.errorlist:last-child{
+    list-style-type: square;
+}
+
+/*HELP*/
+.helpnav{
+    margin-left:10px;
+}
+
+.modal-header svg{
+    margin-right:5px;
+}
