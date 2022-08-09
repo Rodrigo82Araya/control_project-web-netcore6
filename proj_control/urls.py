@@ -9,5 +9,6 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home, name="home"),
+    path('accounts/', include('app_accounts.urls'),name="accounts"),
     path('orden/',include('app_orden.urls'),name="orden"),
 ]
