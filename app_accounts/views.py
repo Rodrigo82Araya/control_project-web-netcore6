@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.core.validators import validate_email
 
 from .models import Account
 
@@ -19,7 +20,7 @@ def login(request):
             auth.login(request, user)
             return redirect('home') 
         else:
-            messages.error(request, 'Las credenciales son incorrectas')
+            messages.warning(request, 'Las credenciales son incorrectas, intente nuevamente.')
             return redirect('login')
 
     return render(request, 'accounts/login.html')
@@ -27,6 +28,6 @@ def login(request):
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
-    messages.success(request, 'Has cerrado tu sesion')
+    messages.info(request, 'Has cerrado tu sesion')
 
     return redirect('login')

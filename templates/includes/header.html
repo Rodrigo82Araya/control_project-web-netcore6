@@ -458,30 +458,24 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Area: {{ user.first_name }}</h6>
-                        <h6 class="dropdown-header">Correo: {{ user.email }}</h6>
+                        <h6 class="dropdown-header"><i
+                            class="mdi mdi-google-circles-extended text-muted fs-16 align-middle me-1"></i> Mantención</h6>
+                        <h6 class="dropdown-header"><i
+                            class="mdi mdi-email text-muted fs-16 align-middle me-1"></i>{{ user.email }}</h6>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="pages-profile.php"><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Perfil</span></a>
+                                class="align-middle">Mi Perfil</span></a>
                         <a class="dropdown-item" href="apps-chat.php"><i
                                 class="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Mensajes</span></a>
-                        <a class="dropdown-item" href="apps-tasks-kanban.php"><i
-                                class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Taskboard</span></a>
                         <a class="dropdown-item" href="pages-faqs.php"><i
                                 class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Ayuda</span></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-profile.php"><i
-                                class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Balance : <b>$5971.67</b></span></a>
-                        <a class="dropdown-item" href="pages-profile-settings.php"><span
-                                class="badge bg-soft-success text-success mt-1 float-end">New</span><i
-                                class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Settings</span></a>
-                        <a class="dropdown-item" href="auth-lockscreen-basic.php"><i
-                                class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a>
+                        <a class="dropdown-item" href="pages-profile-settings.php">
+                            <i  class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
+                                class="align-middle">Administrador</span></a>
                         <a class="dropdown-item" href="{% url 'logout' %}"><i
                                 class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle" data-key=t-logout>Salir</span></a>

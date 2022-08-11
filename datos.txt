@@ -1,13 +1,15 @@
-FRONT
-	Usuario: araya_rodrigo@hotmail.com
-	Clave: admin123.
-	
-	
 ADMIN
 	Email: araya.r82@gmail.com
 	Usuario: araya.r82@gmail.com
 	Clave: 123456
-	prueba git
+
+
+FRONT
+	Usuario: benjamin@gmail.com
+	Clave: ben123456
+	
+
+
 
 	
 	

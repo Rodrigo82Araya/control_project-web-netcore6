@@ -35,7 +35,7 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span>Menú</span></li>
+                <li class="menu-title"><span>Menú </span></li> <!-- { { request.path }} -->
 
                 <!-- MENÚ DASHBOARD ==================================== -->
                 <li class="nav-item">
@@ -46,14 +46,14 @@
 
                 <!-- MENÚ ORDENES ==================================== -->
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
+                    <a class="nav-link menu-link" href="#sidebarOrdenes" data-bs-toggle="collapse" role="button"
+                        aria-expanded="false" aria-controls="sidebarOrdenes">
                         <i class="ri-dashboard-2-line"></i> <span>Control</span>
                     </a>
-                    <div class="collapse menu-dropdown show" id="sidebarDashboards">
+                    <div class="collapse menu-dropdown {% if '/orden/' in request.path %} show {% endif %}" id="sidebarOrdenes">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{% url 'orden_listar' %}" class="nav-link">Ordenes <span
+                                <a href="{% url 'orden_listar' %}" class="nav-link{% if '/orden/' in request.path %} active {% endif %}">Ordenes <span
                                     class="badge badge-pill bg-danger" data-key="t-new">Nuevo</span></a>
                             </li>
                             <li class="nav-item">

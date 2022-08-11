@@ -541,12 +541,12 @@ File: Main Css File
 }
 .footer {
   bottom: 0;
-  padding: 20px calc(1.5rem / 2);
+  padding: 10px calc(1.5rem / 2);
   position: absolute;
   right: 0;
   color: var(--vz-footer-color);
   left: 250px;
-  height: 60px;
+  height: 40px;
   background-color: var(--vz-footer-bg);
 }
 @media (max-width: 991.98px) {

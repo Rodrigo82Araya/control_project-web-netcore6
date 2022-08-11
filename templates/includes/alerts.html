@@ -18,7 +18,7 @@
                     </div>
                 </div>
             {% else %}
-                <div class="alert alert-secondary alert-dismissible alert-label-icon rounded-label fade show" role="alert">
+                <div class="alert alert-{{ message.tags }} alert-dismissible alert-label-icon rounded-label fade show" role="alert">
                     <i class="ri-checkbox-circle-fill label-icon"></i><strong>Información</strong> - {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>

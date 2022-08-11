@@ -10,8 +10,8 @@
                 <div class="modal-body">
                     <h5 class="fs-15">
                         {{ pageAccion }} {{ pageTituloPlu }}
-                    </h5>                    
-                    {% with ""|add:pageTitulo|add:"/ayuda.html" as template %}
+                    </h5>              
+                    {% with "ayuda/"|add:pageTitulo|add:".html" as template %}
                     {% include template %}
                     {% endwith %}
                 </div>

@@ -5,9 +5,9 @@ class Orden(models.Model):
     
     nombre = models.CharField(max_length=30, unique=True,error_messages = {'unique':"El nombre ingresado ya existe, debe ingresar uno distinto." })
     descripcion = models.CharField(max_length=255, blank=True)
-    activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
     prioridad =  models.BooleanField(default=False)
     estado = models.BooleanField(default=True) #1- ABIERTO 0-CERRADO
+    activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
     fecha_creacion = models.DateTimeField(auto_now_add= True)
 
     class Meta():
@@ -29,6 +29,7 @@ class Seguimiento(models.Model):
     nombre = models.CharField(max_length=50)
     status = models.IntegerField(choices=status.choices)
     cant_dias_proy = models.IntegerField()
+    activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
 class SeguimientoAvance(models.Model):

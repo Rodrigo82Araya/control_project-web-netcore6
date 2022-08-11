@@ -2,13 +2,12 @@ from dataclasses import field
 from msilib.schema import CheckBox
 from tkinter import Widget
 from django import forms
-from .models import Orden
+from .models import Orden, Seguimiento
 from django.forms import  TextInput, Textarea
 
 class OrdenesForm(forms.ModelForm):
     
-
-    class Meta:        
+    class Meta:
         model = Orden
         fields = ['nombre','descripcion','prioridad']
         widgets = {
@@ -27,5 +26,14 @@ class OrdenesForm(forms.ModelForm):
             if field != 'prioridad':
                 self.fields[field].widget.attrs['class']='form-control'       
         
-        
-        
+class SeguimientoForm(forms.ModelForm):
+    
+    class Meta:
+        model = Seguimiento
+        fields = ['id_usuario_asignado','nombre','status','cant_dias_proy']
+
+    def __init__(self, *args, **kwargs):
+        super(SeguimientoForm, self).__init__(*args,**kwargs)   
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class']='form-control'
