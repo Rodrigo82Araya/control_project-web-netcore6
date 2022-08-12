@@ -4,9 +4,9 @@
 {% block content %}
 
 <!-- NAVEGADOR -->
-<div class="row">
+<div class="row" >
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between borOrden">
             <h4 class="mb-sm-0">{{ pageAccion }} de {{ pageTituloPlu }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -92,7 +92,7 @@
                                                 <a href="{% url 'orden_modificar' o.id %}" class="btn btn-sm btn-success edit-item-btn">Modificar</a>
                                             </div>
                                             <div class="remove">
-                                                <a href="{% url 'orden_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event)">Eliminar</a>
+                                                <a href="{% url 'orden_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event, 'esta orden')">Eliminar</a>
                                             </div>
                                         </div>
                                     </td>

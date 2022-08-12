@@ -25,3 +25,19 @@
 .paginador li { 
     display: inline-block; 
 }
+
+/*BORDE IDENTIFICADOR*/
+.borOrden{
+    border-bottom:1px solid #0AB39C;
+}
+.borSeguimiento{
+    border-bottom:1px solid #F7B84B;
+}
+.borSeguimientoSubNav{
+    background-color: #FEF4E4;
+}
+
+.subNav{
+    height: 30px;
+}
+
