@@ -48,7 +48,7 @@
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <a href="{% url 'seguimiento_agregar' idOrden=orden.id nombreOrden=orden.nombre %}" class="btn btn-success add-btn">
+                                <a href="{% url 'seguimiento_agregar' idOrden=orden.id nombreOrden=orden.nombre %}" class="btn btn-warning add-btn">
                                     <i class="ri-add-line align-bottom me-1"></i> Agregar {{ pageTitulo }}
                                 </a>
                             </div>
@@ -91,10 +91,10 @@
                                     <td>
                                         <div class="d-flex gap-2 float-end">
                                             <div class="edit">
-                                                <a href="" class="btn btn-sm btn-success edit-item-btn">Modificar</a>
+                                                <a href="{% url 'seguimiento_modificar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Modificar</a>
                                             </div>
                                             <div class="remove">
-                                                <a href="{% url 'seguimiento_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event)">Eliminar</a>
+                                                <a href="{% url 'seguimiento_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event, 'este seguimento')">Eliminar</a>
                                             </div>
                                         </div>
                                     </td>

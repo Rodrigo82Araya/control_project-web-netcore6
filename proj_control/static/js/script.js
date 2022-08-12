@@ -1,9 +1,9 @@
-function alertConfirmacion(e) {
+function alertConfirmacion(e, text) {
     e.preventDefault();
     
     var url = e.currentTarget.getAttribute('href');
     Swal.fire({
-        title: 'Realmente deseas eliminar esta orden?',
+        title: 'Realmente deseas eliminar ' + text + '?',
         text: "Esto no se podra revertir!",
         icon: 'question',
         showCancelButton: true,
@@ -21,10 +21,10 @@ function alertConfirmacion(e) {
     })
 }
 
-function alertExito(e){
-    Swal.fire({
-        title: 'Realmente deseas eliminar esta orden?',
-        text: "Esto no se podra revertir!",
-        icon: 'success',
-    })  
-}
+// function alertExito(e){
+//     Swal.fire({
+//         title: 'Realmente deseas eliminar esta orden?',
+//         text: "Esto no se podra revertir!",
+//         icon: 'success',
+//     })  
+// }

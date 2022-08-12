@@ -26,11 +26,18 @@ class Seguimiento(models.Model):
 
     id_orden = models.ForeignKey(Orden,on_delete=models.CASCADE)    
     id_usuario_asignado = models.ForeignKey(Account, on_delete = models.CASCADE)
-    nombre = models.CharField(max_length=50)
-    status = models.IntegerField(choices=status.choices)
-    cant_dias_proy = models.IntegerField()
+    nombre = models.CharField(blank=False, max_length=50)
+    status = models.IntegerField(blank=False,choices=status.choices)
+    cant_dias_proy = models.IntegerField(blank=False)
     activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField(blank=True,auto_now_add=True)
+
+    class Meta():
+        verbose_name = 'seguimiento'
+        verbose_name_plural = 'seguimientos'
+    
+    def __str__(self):
+        return self.nombre
 
 class SeguimientoAvance(models.Model):
     id_seguimiento = models.ForeignKey(Seguimiento,on_delete=models.CASCADE)  

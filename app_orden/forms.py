@@ -24,14 +24,15 @@ class OrdenesForm(forms.ModelForm):
 
         for field in self.fields:
             if field != 'prioridad':
-                self.fields[field].widget.attrs['class']='form-control'       
+                self.fields[field].widget.attrs['class']='form-control'
         
 class SeguimientoForm(forms.ModelForm):
     
     class Meta:
         model = Seguimiento
-        fields = ['id_usuario_asignado','nombre','status','cant_dias_proy']
-
+        fields = ['id_orden', 'id_usuario_asignado','nombre','status','cant_dias_proy']
+        widgets = {"id_orden": forms.TextInput(),"id_orden": forms.HiddenInput()}
+        
     def __init__(self, *args, **kwargs):
         super(SeguimientoForm, self).__init__(*args,**kwargs)   
 

@@ -52,15 +52,15 @@ def orden_agregar(request):
     }
 
     if request.method == 'POST':
-        formulario = OrdenesForm(data=request.POST, files=request.FILES)
+        formulario = OrdenesForm(data=request.POST)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Orden ingresada correctamente")
+            messages.info(request, titulo + ' ingresada correctamente')
 
             redirect("orden_agregar")
         else:
             data["form"] = formulario
-            messages.error(request, 'Problemas para ingresar la orden')
+            messages.error(request, 'Problemas para ingresar la ' + titulo)
 
     return render(request, 'orden/orden_formulario.html',data)
 
@@ -78,11 +78,11 @@ def orden_modificar(request, id):
         formulario = OrdenesForm(data=request.POST, instance=ordenes, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Orden modificada correctamente")
+            messages.info(request, titulo + ' modificada correctamente')
 
             return redirect("orden_modificar",id)
         else:
-            messages.error(request, 'Problemas para modificar la orden')
+            messages.error(request, 'Problemas para modificar la ' + titulo)
             data["form"] = formulario
 
     return render(request, 'orden/orden_formulario.html', data)
@@ -134,7 +134,7 @@ def seguimiento_listar(request, id):
 @login_required(login_url='login')
 def seguimiento_agregar(request, idOrden,nombreOrden):
     data = {
-        'form': SeguimientoForm(),
+        'form': SeguimientoForm(initial={'id_orden': idOrden}),
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Agregar',
@@ -143,48 +143,55 @@ def seguimiento_agregar(request, idOrden,nombreOrden):
     }
 
     if request.method == 'POST':
-        formulario = SeguimientoForm(data=request.POST, files=request.FILES)
-        if formulario.is_valid():
-            formulario.save()
-            messages.success(request, "Seguimiento ingresado correctamente")
+        form = SeguimientoForm(data=request.POST)
 
-            redirect("seguimiento_agregar")
+        if form.is_valid():            
+            form.save()
+            messages.info(request, tituloS + ' ingresado correctamente')
+
+            redirect("orden/seguimiento/seguimiento_agregar")
         else:
-            data["form"] = formulario
-            messages.error(request, 'Problemas para ingresar el seguimiento')
+            data["form"] = form
+            messages.error(request, 'Problemas para ingresar el ' + tituloS)
 
     return render(request, 'orden/seguimiento/seguimiento_formulario.html',data)
 
-
 @login_required(login_url='login')
 def seguimiento_modificar(request, id):
-    ordenes = get_object_or_404(Orden, id=id)
+    seguimientos = get_object_or_404(Seguimiento, id=id)
+    ordenes = get_object_or_404(Orden, nombre=seguimientos.id_orden)
+
     data = {
-        'form':OrdenesForm(instance=ordenes),
+        'form':SeguimientoForm(instance=seguimientos),
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Modificar',
+        'idOrden':ordenes.id,
+        'nombreOrden':ordenes.nombre,
     }
 
     if request.method == 'POST':
-        formulario = OrdenesForm(data=request.POST, instance=ordenes, files=request.FILES)
+        formulario = SeguimientoForm(data=request.POST, instance=seguimientos)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request,"Orden modificada correctamente")
+            messages.info(request, tituloS + ' modificado correctamente')
 
-            return redirect("orden_modificar",id)
+            return redirect("seguimiento_modificar",id)
         else:
-            messages.error(request, 'Problemas para modificar la orden')
+            messages.error(request, 'Problemas para modificar el ' + tituloS)
             data["form"] = formulario
 
     return render(request, 'orden/seguimiento/seguimiento_formulario.html', data)
 
 @login_required(login_url='login')
 def seguimiento_eliminar(request, id):
-    ordenes = get_object_or_404(Orden, id=id)
-    ordenes.delete()
-    return redirect(to='seguimiento_listar')
+    objeto = get_object_or_404(Seguimiento, id=id)
+    orden = get_object_or_404(Orden, nombre=objeto.id_orden)
 
+    objeto.delete()
+    return redirect('seguimiento_listar',orden.id)
+    
+    
 
 
 
