@@ -29,7 +29,7 @@ class Seguimiento(models.Model):
     nombre = models.CharField(blank=False, max_length=50)
     status = models.IntegerField(blank=False,choices=status.choices)
     cant_dias_proy = models.IntegerField(blank=False)
-    activo = models.BooleanField(default=True)  #1- ACTIVO 0-ANULADO
+    activo = models.BooleanField(blank=False,default=True)  #1- ACTIVO 0-ANULADO
     fecha_creacion = models.DateTimeField(blank=True,auto_now_add=True)
 
     class Meta():

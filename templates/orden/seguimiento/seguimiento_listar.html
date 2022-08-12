@@ -48,7 +48,7 @@
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <a href="{% url 'seguimiento_agregar' idOrden=orden.id nombreOrden=orden.nombre %}" class="btn btn-warning add-btn">
+                                <a href="{% url 'seguimiento_agregar' idOrden=orden.id %}" class="btn btn-warning add-btn">
                                     <i class="ri-add-line align-bottom me-1"></i> Agregar {{ pageTitulo }}
                                 </a>
                             </div>
@@ -71,8 +71,8 @@
                                     <th class="sort" data-sort="customer_name">Nombre</th>
                                     <th class="sort" data-sort="date">Días proyectados</th>
                                     <th class="sort" data-sort="email">Status</th>
+                                    <th class="sort" data-sort="email">Asignado a</th>
                                     <th class="sort" data-sort="date">Estado</th>
-                                    <th class="sort" data-sort="date">Fecha creación</th>
                                     <th class="sort" data-sort="action">Acciones</th>
                                     </tr>
                             </thead>
@@ -84,12 +84,13 @@
                                     <td class="customer_name">{{ o.nombre | title}}</td>                                    
                                     <td class="customer_name">{{ o.cant_dias_proy}}</td>
                                     <td class="status">{{ o.get_status_display }}</td>
+                                    <td class="customer_name">{{ o.id_usuario_asignado }}</td>
                                     <td class="status"><span class="badge badge-soft-success text-uppercase">Activo</span></td>
-                                    <td class="date">
-                                        {{ o.fecha_creacion | date:"d/m/Y H:i" }}
-                                    </td>
                                     <td>
                                         <div class="d-flex gap-2 float-end">
+                                            <div class="edit">
+                                                <a href="" class="btn btn-sm btn-info edit-item-btn">Avances</a>
+                                            </div>
                                             <div class="edit">
                                                 <a href="{% url 'seguimiento_modificar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Modificar</a>
                                             </div>

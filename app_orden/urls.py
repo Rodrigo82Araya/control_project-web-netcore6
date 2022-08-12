@@ -11,7 +11,10 @@ urlpatterns =[
 
     #SEGUIMIENTO====================================
     path('orden-listar/<id>/seguimiento-listar/', views.seguimiento_listar, name="seguimiento_listar"),
-    path('seguimiento-agregar/<idOrden>/<nombreOrden>/', views.seguimiento_agregar, name="seguimiento_agregar"),
+    path('orden-listar/<idOrden>/seguimiento-agregar/', views.seguimiento_agregar, name="seguimiento_agregar"),
     path('seguimiento-modificar/<id>/', views.seguimiento_modificar, name="seguimiento_modificar"),
     path('seguimiento-eliminar/<id>/', views.seguimiento_eliminar, name="seguimiento_eliminar"),
+
+    #AVANCES=========================================
+    #path('seguimiento-listar/<id>/avance-listar/', views.seguimiento_listar, name="avance_listar"),
 ]

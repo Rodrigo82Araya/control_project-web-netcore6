@@ -132,14 +132,16 @@ def seguimiento_listar(request, id):
     return render(request, 'orden/seguimiento/seguimiento_listar.html',data)
 
 @login_required(login_url='login')
-def seguimiento_agregar(request, idOrden,nombreOrden):
+def seguimiento_agregar(request, idOrden):
+    orden = get_object_or_404(Orden, id=idOrden)
+
     data = {
         'form': SeguimientoForm(initial={'id_orden': idOrden}),
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Agregar',
-        'idOrden':idOrden,
-        'nombreOrden':nombreOrden,
+        'idOrden':orden.id,
+        'nombreOrden':orden.nombre,
     }
 
     if request.method == 'POST':
@@ -159,15 +161,15 @@ def seguimiento_agregar(request, idOrden,nombreOrden):
 @login_required(login_url='login')
 def seguimiento_modificar(request, id):
     seguimientos = get_object_or_404(Seguimiento, id=id)
-    ordenes = get_object_or_404(Orden, nombre=seguimientos.id_orden)
+    orden = get_object_or_404(Orden, nombre=seguimientos.id_orden)
 
     data = {
         'form':SeguimientoForm(instance=seguimientos),
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Modificar',
-        'idOrden':ordenes.id,
-        'nombreOrden':ordenes.nombre,
+        'idOrden':orden.id,
+        'nombreOrden':orden.nombre,
     }
 
     if request.method == 'POST':
