@@ -1,9 +1,9 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
-from app_orden.forms import OrdenesForm, SeguimientoForm
+from app_orden.forms import OrdenesForm, SeguimientoForm,SeguimientoAvanceForm
 from django.contrib.auth.decorators import login_required
-from .models import Orden, Seguimiento
+from .models import Orden, Seguimiento, SeguimientoAvance,SeguimientoAvance
 from django.contrib import messages
 
 #ORDENES====================================================================================
@@ -140,8 +140,7 @@ def seguimiento_agregar(request, idOrden):
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Agregar',
-        'idOrden':orden.id,
-        'nombreOrden':orden.nombre,
+        'orden':orden,
     }
 
     if request.method == 'POST':
@@ -168,8 +167,7 @@ def seguimiento_modificar(request, id):
         'pageTitulo': tituloS,
         'pageTituloPlu': tituloPluS,
         'pageAccion': 'Modificar',
-        'idOrden':orden.id,
-        'nombreOrden':orden.nombre,
+        'orden':orden,
     }
 
     if request.method == 'POST':
@@ -193,20 +191,108 @@ def seguimiento_eliminar(request, id):
     objeto.delete()
     return redirect('seguimiento_listar',orden.id)
     
+#AVANCE - SEGUIMIENTO ====================================================================================
+tituloA="Avance"
+tituloPluA="Avances"  
+
+@login_required(login_url='login')
+def avance_listar(request, id):
+    listado_all = SeguimientoAvance.objects.all().filter(id_seguimiento=id).order_by('-id') 
+    seguimiento = get_object_or_404(Seguimiento, id=id)
+    orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
     
+    filas = 7
+    pages = request.GET.get('page',1)    
+        
+    try:
+        paginator = Paginator(listado_all, filas)
+        listadoPaginador = paginator.page(pages)
+        filaInicio= (filas * listadoPaginador.number) - (filas - 1)
 
+        filasTotales = (filas * listadoPaginador.number)  
+        if ( filasTotales < listado_all.count()): 
+            filaFin=filasTotales
+        else:
+            filaFin=listado_all.count()
 
+    except:
+        raise Http404
 
+    data={
+        'entity':listadoPaginador,
+        'paginator':paginator,
+        'totalFilas':listado_all.count(),
+        'filaInicio': filaInicio,
+        'filaFin':filaFin,
+        'pageTitulo': tituloA,
+        'pageTituloPlu': tituloPluA,
+        'pageAccion': 'Listado',
+        'seguimiento':seguimiento,
+        'orden':orden,  
+    }
+    return render(request, 'orden/seguimiento/avance/avance_listar.html',data)
 
+@login_required(login_url='login')
+def avance_agregar(request, idSeguimiento):
+    seguimiento = get_object_or_404(Seguimiento, id=idSeguimiento)
+    orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
 
+    data = {
+        'form': SeguimientoAvanceForm(initial={'id_seguimiento': idSeguimiento}),
+        'pageTitulo': tituloA,
+        'pageTituloPlu': tituloPluA,
+        'pageAccion': 'Agregar',
+        'seguimiento':seguimiento,
+        'orden':orden,
+    }
 
+    if request.method == 'POST':
+        form = SeguimientoAvanceForm(data=request.POST)
 
+        if form.is_valid():            
+            form.save()
+            messages.info(request, tituloA + ' ingresado correctamente')
 
+            redirect("orden/avance/avance_agregar")
+        else:
+            data["form"] = form
+            messages.error(request, 'Problemas para ingresar el ' + tituloA)
 
+    return render(request, 'orden/seguimiento/avance/avance_formulario.html',data)
 
+@login_required(login_url='login')
+def avance_modificar(request, id):
+    avance = get_object_or_404(SeguimientoAvance, id=id)
+    seguimiento = get_object_or_404(Seguimiento, nombre=avance.id_seguimiento)
+    orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
 
+    data = {
+        'form':SeguimientoAvanceForm(instance=avance),
+        'pageTitulo': tituloA,
+        'pageTituloPlu': tituloPluA,
+        'pageAccion': 'Modificar',
+        'seguimiento':seguimiento,
+        'orden':orden,
+    }
 
+    if request.method == 'POST':
+        formulario = SeguimientoAvanceForm(data=request.POST, instance=avance)
+        if formulario.is_valid():
+            formulario.save()
+            messages.info(request, tituloA + ' modificado correctamente')
 
+            return redirect("avance_modificar",id)
+        else:
+            messages.error(request, 'Problemas para modificar el ' + tituloA)
+            data["form"] = formulario
 
+    return render(request, 'orden/seguimiento/avance/avance_formulario.html', data)
 
+@login_required(login_url='login')
+def avance_eliminar(request, id):
+    objeto = get_object_or_404(SeguimientoAvance, id=id)
+    seguimiento = get_object_or_404(Seguimiento, nombre=objeto.id_seguimiento)
 
+    objeto.delete()
+    return redirect('avance_listar',seguimiento.id)
+    

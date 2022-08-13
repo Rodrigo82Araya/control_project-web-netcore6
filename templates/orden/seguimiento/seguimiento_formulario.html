@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between borSeguimiento">
-            <h4 class="mb-sm-0">{{ pageAccion }} de {{ pageTitulo }}</h4>
+            <h4 class="mb-sm-0">{{ pageAccion }} de {{ pageTituloPlu }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Control</a></li>
                     <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Ordenes</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'seguimiento_listar' idOrden %}">Listado de Seguimientos</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'seguimiento_listar' orden.id %}">Seguimientos</a></li>
                     <li class="breadcrumb-item active">{{ pageAccion }} de {{ pageTituloPlu }}</li>
                     <li class="helpnav">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
@@ -32,7 +32,7 @@
             <div class="page-title-left" >
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item active" style="color: black;font-weight: bold;">
-                        <a href="{% url 'orden_listar' %}">Orden: # {{ idOrden }} - {{ nombreOrden }}</a>
+                        <a href="{% url 'orden_listar' %}">Orden: # {{ orden.id }}  - {{ orden.nombre }}</a>
                     </li>
                 </ol>
             </div>            
@@ -82,7 +82,7 @@
                             <!--BOTONES -->
                             <div class="col-lg-12">
                                 <div class="text-muted" style="float: left;">
-                                    <a href="{% url 'seguimiento_listar' idOrden %}" class="btn btn-warning">Volver</a>
+                                    <a href="{% url 'seguimiento_listar' orden.id %}" class="btn btn-warning">Volver</a>
                                 </div>
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">Guardar</button>

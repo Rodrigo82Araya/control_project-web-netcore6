@@ -2,7 +2,7 @@ from dataclasses import field
 from msilib.schema import CheckBox
 from tkinter import Widget
 from django import forms
-from .models import Orden, Seguimiento
+from .models import Orden, Seguimiento,SeguimientoAvance
 from django.forms import  TextInput, Textarea
 
 class OrdenesForm(forms.ModelForm):
@@ -36,5 +36,25 @@ class SeguimientoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SeguimientoForm, self).__init__(*args,**kwargs)   
 
+        for field in self.fields:
+            self.fields[field].widget.attrs['class']='form-control'
+
+class SeguimientoAvanceForm(forms.ModelForm):
+    
+    class Meta:
+        model = SeguimientoAvance
+        fields = ['id_seguimiento','nombre','descripcion']
+        widgets = {
+            "id_seguimiento": forms.TextInput(),"id_seguimiento": forms.HiddenInput(),
+            'descripcion': Textarea(attrs={
+                'class': "form-control", 
+                'placeholder': 'Ingrese el detalle del avance'
+            }),
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super(SeguimientoAvanceForm, self).__init__(*args,**kwargs)   
+
+        self.fields['nombre'].widget.attrs['placeholder'] = 'Ingrese el nombre del avance'
         for field in self.fields:
             self.fields[field].widget.attrs['class']='form-control'

@@ -1,22 +1,40 @@
 {% extends 'index.html' %} {% load static %} 
-{% block title %} {{ pageAccion }} {{ pageTitulo }} {% endblock %}
+{% block title %} {{ pageAccion }} {{ pageTitulo }}  {% endblock %}
 
 {% block content %}
 
 <!-- NAVEGADOR -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between borOrden">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between borAvance">
             <h4 class="mb-sm-0">{{ pageAccion }} {{ pageTitulo }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="{% url 'orden_listar' %}">Control</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'orden_listar' %}">Listado de Ordenes</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Control</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Ordenes</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'seguimiento_listar' orden.id %}">Seguimientos</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'avance_listar' seguimiento.id %}">Listado de {{ pageTituloPlu }}</a></li>
                     <li class="breadcrumb-item active">{{ pageAccion }} {{ pageTitulo }}</li>
                     <li class="helpnav">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                         </a>
+                    </li>
+                </ol>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<!-- SUB NAVEGADOR -->
+<div class="row">
+    <div class="col-12" >
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between borAvanceSubNav subNav">
+            <div class="page-title-left" >
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item active" style="color: black;font-weight: bold;">
+                        <a href="{% url 'orden_listar' %}">Orden: # {{ orden.id }}  - {{ orden.nombre }}</a> / 
+                        <a href="{% url 'seguimiento_listar' orden.id %}">Seguimiento: # {{ seguimiento.id }} - {{ seguimiento.nombre }}</a>
                     </li>
                 </ol>
             </div>            
@@ -32,11 +50,10 @@
                 {% include 'includes/alerts.html' %}
                 <!-- <p class="text-muted"></p> -->
                 <div class="live-preview">
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="" method="POST">
                         <div class="row">
                             {% csrf_token %}
                             
-
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">Nombre</label>
@@ -49,20 +66,12 @@
                                     {{ form.descripcion }}
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <div class="form-check form-switch form-switch-custom form-switch-danger">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="SwitchCheck13">
-                                        {{ form.prioridad }}
-                                        <label class="form-check-label" for="SwitchCheck13">Esta orden es de Alta Prioridad?</label>
-                                    </div>
-                                </div>
-                            </div>
 
+                            {{ form.id_seguimiento }}
                             <!--BOTONES -->
                             <div class="col-lg-12">
                                 <div class="text-muted" style="float: left;">
-                                    <a href="{% url 'orden_listar' %}" class="btn btn-success">Volver</a>
+                                    <a href="{% url 'avance_listar' seguimiento.id %}" class="btn btn-warning">Volver</a>
                                 </div>
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">Guardar</button>

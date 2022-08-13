@@ -26,7 +26,7 @@
     display: inline-block; 
 }
 
-/*BORDE IDENTIFICADOR*/
+/*NAVEGADOR BORDE IDENTIFICADOR*/
 .borOrden{
     border-bottom:1px solid #0AB39C;
 }
@@ -35,6 +35,13 @@
 }
 .borSeguimientoSubNav{
     background-color: #FEF4E4;
+}
+
+.borAvance{
+    border-bottom:1px solid #299CDB;
+}
+.borAvanceSubNav{
+    background-color: #CAE7F7;
 }
 
 .subNav{

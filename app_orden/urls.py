@@ -16,5 +16,8 @@ urlpatterns =[
     path('seguimiento-eliminar/<id>/', views.seguimiento_eliminar, name="seguimiento_eliminar"),
 
     #AVANCES=========================================
-    #path('seguimiento-listar/<id>/avance-listar/', views.seguimiento_listar, name="avance_listar"),
+    path('seguimiento/<id>/avance-listar/', views.avance_listar, name="avance_listar"),
+    path('seguimiento/<idSeguimiento>/avance-agregar/', views.avance_agregar, name="avance_agregar"),
+    path('avance-modificar/<id>/', views.avance_modificar, name="avance_modificar"),
+    path('avance-eliminar/<id>/', views.avance_eliminar, name="avance_eliminar"),
 ]

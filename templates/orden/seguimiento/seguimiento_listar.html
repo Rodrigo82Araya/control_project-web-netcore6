@@ -89,7 +89,7 @@
                                     <td>
                                         <div class="d-flex gap-2 float-end">
                                             <div class="edit">
-                                                <a href="" class="btn btn-sm btn-info edit-item-btn">Avances</a>
+                                                <a href="{% url 'avance_listar' o.id %}" class="btn btn-sm btn-info edit-item-btn">Avances</a>
                                             </div>
                                             <div class="edit">
                                                 <a href="{% url 'seguimiento_modificar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Modificar</a>

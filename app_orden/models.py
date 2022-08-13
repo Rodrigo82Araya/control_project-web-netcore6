@@ -42,7 +42,7 @@ class Seguimiento(models.Model):
 class SeguimientoAvance(models.Model):
     id_seguimiento = models.ForeignKey(Seguimiento,on_delete=models.CASCADE)  
     nombre = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=255, blank=True)
+    descripcion = models.CharField(max_length=255, blank=False)
     fecha_creacion = models.DateTimeField(auto_now_add= True)
 
 class SeguimientoArchivos(models.Model):

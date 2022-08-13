@@ -4,13 +4,15 @@
 {% block content %}
 
 <!-- NAVEGADOR -->
-<div class="row" >
+<div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between borOrden">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between borAvance">
             <h4 class="mb-sm-0">{{ pageAccion }} de {{ pageTituloPlu }}</h4>
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item active">Control</li>
+                    <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Control</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Ordenes</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'seguimiento_listar' orden.id %}">Seguimientos</a></li>                    
                     <li class="breadcrumb-item active">{{ pageAccion }} de {{ pageTituloPlu }}</li>
                     <li class="helpnav">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
@@ -22,7 +24,22 @@
         </div>
     </div>
 </div>
-<!-- END NAVEGADOR -->
+
+<!-- SUB NAVEGADOR -->
+<div class="row">
+    <div class="col-12" >
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between borAvanceSubNav subNav">
+            <div class="page-title-left" >
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item active" style="color: black;font-weight: bold;">
+                        <a href="{% url 'orden_listar' %}"> Orden: # {{ orden.id }}  - {{ orden.nombre }}</a> / 
+                        <a href="{% url 'seguimiento_listar' orden.id %}">Seguimiento: # {{ seguimiento.id }} - {{ seguimiento.nombre }}</a>
+                    </li>
+                </ol>
+            </div>            
+        </div>
+    </div>
+</div>
 
 <!-- LIST -->
 <div class="row">
@@ -33,7 +50,7 @@
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <a href="{% url 'orden_agregar' %}" class="btn btn-success add-btn">
+                                <a href="{% url 'avance_agregar' idSeguimiento=seguimiento.id %}" class="btn btn-info add-btn">
                                     <i class="ri-add-line align-bottom me-1"></i> Agregar {{ pageTitulo }}
                                 </a>
                             </div>
@@ -55,42 +72,29 @@
                                     <th class="sort" data-sort="customer_name"># ID</th>
                                     <th class="sort" data-sort="customer_name">Nombre</th>
                                     <th class="sort" data-sort="email">Descripción</th> 
-                                    <th class="sort" data-sort="date">Alta Prioridad?</th>
-                                    <th class="sort" data-sort="date">Estado</th>
                                     <th class="sort" data-sort="action">Acciones</th>
-                                    </tr>
+                                </tr>
                             </thead>
                             <tbody class="list form-check-all">
                                 {% for o in entity %}
                                 <tr>
                                     <th scope="row">{{ o.id }}</th>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                    <td class="customer_name">{{ o.nombre | title}}</td>
+                                    <td class="customer_name">{{ o.nombre | title}}</td>                                    
                                     <td class="email">
                                         {{ o.descripcion | title | slice:":30" }}
                                         {% if o.descripcion|length > 30 %}
                                             ...
-                                        {% endif %}
-
-                                    </td>
-                                    <td class="status">
-                                        {% if o.prioridad %}
-                                            <i class="ri-checkbox-circle-line align-middle text-success"></i>
-                                        {% else %}
-                                            <i class="ri-close-circle-line align-middle text-danger"></i>
                                         {% endif %}
                                     </td>
                                     <td class="status"><span class="badge badge-soft-success text-uppercase">Activo</span></td>
                                     <td>
                                         <div class="d-flex gap-2 float-end">
                                             <div class="edit">
-                                                <a href="{% url 'seguimiento_listar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Seguimiento</a>
-                                            </div>
-                                            <div class="edit">
-                                                <a href="{% url 'orden_modificar' o.id %}" class="btn btn-sm btn-success edit-item-btn">Modificar</a>
+                                                <a href="{% url 'avance_modificar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Modificar</a>
                                             </div>
                                             <div class="remove">
-                                                <a href="{% url 'orden_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event, 'esta orden')">Eliminar</a>
+                                                <a href="{% url 'avance_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event, 'este avance')">Eliminar</a>
                                             </div>
                                         </div>
                                     </td>
@@ -128,8 +132,8 @@
 </div>
 <!-- END LIST -->
 
- <!-- MODAL AYUDA =================================================================== -->
- {% include 'includes/modal_ayuda.html' %}
+<!-- MODAL AYUDA =================================================================== -->
+{% include 'includes/modal_ayuda.html' %} 
 
 
 {% endblock %}
