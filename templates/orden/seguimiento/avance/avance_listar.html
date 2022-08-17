@@ -16,20 +16,54 @@
         });
     
         //LEVANTA MODAL - MODIFICAR ORDEN
-        $('.btnEdit').on('click',function(){
+        $('.btnEdit').on('click',function(e){
             //alert('edit');
 
             $('form')[0].reset();
-            $('input[name="id_avance"]').attr('value', $(this).data('value'));            
+            $('input[name="id_avance"]').attr('value', $(this).data('value'));     
+            
+            //TRAER DATOS
+            e.preventDefault(); // preventing from page reload and default actions
+            var serializedData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                headers:{
+                    "X-CSRFToken": "{{csrf_token}}"
+                },
+                
+                url: "{% url 'avance_get_data' %}",
+                data: {
+                    //id:$('#id_avance').val(),
+                    id:$('#id_avance').val(),
+                },
+                success: function (response) {
+                    //alert('ok');
+
+                    var instance = JSON.parse(response["instance"]);
+                    var fields = instance[0]["fields"];
+                    //alert(fields['nombre']);
+                    
+                    $('#id_id_seguimiento').val(fields['id_seguimiento']);
+                    $('#id_nombre').val(fields['nombre']);
+                    $('#id_descripcion').val(fields['descripcion']);
+                    //location.reload();
+                    
+                },
+                error: function (response) {
+                    alert('error');
+                    alert(response["responseJSON"]["error"]);
+                }
+            });
+
         });
 
         //GUARDA ORDEN
         $("#formAvance").submit(function (e) {
             //alert($('#id_avance').val());
-            // alert($('#id_id_seguimiento').val());      
+            //alert($('#id_id_seguimiento').val());      
             
-            e.preventDefault(); // preventing from page reload and default actions
-            
+            e.preventDefault(); // preventing from page reload and default actions            
             var serializedData = $(this).serialize(); // serialize the data for sending the form data.
 
             $.ajax({
@@ -54,7 +88,6 @@
             });
             
         });
-
     });
 </script>
 
