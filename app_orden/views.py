@@ -1,9 +1,11 @@
-from django.http import Http404
+
+from django.http import Http404,JsonResponse
+from django.core import serializers
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from app_orden.forms import OrdenesForm, SeguimientoForm,SeguimientoAvanceForm
 from django.contrib.auth.decorators import login_required
-from .models import Orden, Seguimiento, SeguimientoAvance,SeguimientoAvance
+from .models import Orden, Seguimiento, SeguimientoAvance
 from django.contrib import messages
 
 #ORDENES====================================================================================
@@ -219,6 +221,7 @@ def avance_listar(request, id):
         raise Http404
 
     data={
+        'form': SeguimientoAvanceForm(initial={'id_seguimiento': seguimiento.id}),
         'entity':listadoPaginador,
         'paginator':paginator,
         'totalFilas':listado_all.count(),
@@ -228,65 +231,81 @@ def avance_listar(request, id):
         'pageTituloPlu': tituloPluA,
         'pageAccion': 'Listado',
         'seguimiento':seguimiento,
-        'orden':orden,  
+        'orden':orden,
+        'actionURL': '',
     }
     return render(request, 'orden/seguimiento/avance/avance_listar.html',data)
 
+# @login_required(login_url='login')
+# def avance_agregar(request, idSeguimiento):
+#     seguimiento = get_object_or_404(Seguimiento, id=idSeguimiento)
+#     orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
+
+#     data = {
+#         'form': SeguimientoAvanceForm(initial={'id_seguimiento': idSeguimiento}),
+#         'pageTitulo': tituloA,
+#         'pageTituloPlu': tituloPluA,
+#         'pageAccion': 'Agregar',
+#         'seguimiento':seguimiento,
+#         'orden':orden,
+#         'actionURL': 'add',
+#     }
+
+#     if request.method == 'POST':
+#         form = SeguimientoAvanceForm(data=request.POST)
+
+#         if form.is_valid():            
+#             form.save()
+#             messages.info(request, tituloA + ' ingresado correctamente')
+
+#             return redirect("avance_listar",seguimiento.id)
+#         else:
+#             data["form"] = form
+#             messages.error(request, 'Problemas para ingresar el ' + tituloA)
+
+#     return render(request, 'orden/seguimiento/avance/avance_listar.html',data)
+
 @login_required(login_url='login')
-def avance_agregar(request, idSeguimiento):
-    seguimiento = get_object_or_404(Seguimiento, id=idSeguimiento)
-    orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
+def avance_add_edit(request):
 
-    data = {
-        'form': SeguimientoAvanceForm(initial={'id_seguimiento': idSeguimiento}),
-        'pageTitulo': tituloA,
-        'pageTituloPlu': tituloPluA,
-        'pageAccion': 'Agregar',
-        'seguimiento':seguimiento,
-        'orden':orden,
-    }
+    try:
 
-    if request.method == 'POST':
-        form = SeguimientoAvanceForm(data=request.POST)
+        if request.method == "POST":
+            id = request.POST['id']
+            #EDIT=========================================================================
+            if(int(id) > 0):
+                avance = get_object_or_404(SeguimientoAvance, id=id)
+                form  = SeguimientoAvanceForm(data=request.POST,instance=avance)
 
-        if form.is_valid():            
-            form.save()
-            messages.info(request, tituloA + ' ingresado correctamente')
+                if form.is_valid():
+                    form.save()                    
+                    return JsonResponse({"instance": 'ok'}, status=200)
+                else:
+                    datass = form.errors.as_json()                    
+                    return JsonResponse({"error":  datass}, status=400)
+                    #return JsonResponse({"error": '1'}, status=400)
+                    # messages.error(request, 'Problemas para modificar el ' + tituloA)
+            #ADD============================================================================
+            else:
+                #idSeguimiento = request.POST['id_seguimiento']
+                #seguimiento = get_object_or_404(Seguimiento, id=idSeguimiento)
 
-            redirect("orden/avance/avance_agregar")
+                if request.method == 'POST':
+                    form = SeguimientoAvanceForm(data=request.POST)
+
+                    if form.is_valid():            
+                        form.save()
+                        return JsonResponse({"instance": 'ok'}, status=200)
+                    else:
+                        datass = form.errors.as_json()                    
+                        return JsonResponse({"error":  datass}, status=400)
         else:
-            data["form"] = form
-            messages.error(request, 'Problemas para ingresar el ' + tituloA)
+            return JsonResponse({"error":  "sin post"}, status=400)    
 
-    return render(request, 'orden/seguimiento/avance/avance_formulario.html',data)
-
-@login_required(login_url='login')
-def avance_modificar(request, id):
-    avance = get_object_or_404(SeguimientoAvance, id=id)
-    seguimiento = get_object_or_404(Seguimiento, nombre=avance.id_seguimiento)
-    orden = get_object_or_404(Orden, nombre=seguimiento.id_orden)
-
-    data = {
-        'form':SeguimientoAvanceForm(instance=avance),
-        'pageTitulo': tituloA,
-        'pageTituloPlu': tituloPluA,
-        'pageAccion': 'Modificar',
-        'seguimiento':seguimiento,
-        'orden':orden,
-    }
-
-    if request.method == 'POST':
-        formulario = SeguimientoAvanceForm(data=request.POST, instance=avance)
-        if formulario.is_valid():
-            formulario.save()
-            messages.info(request, tituloA + ' modificado correctamente')
-
-            return redirect("avance_modificar",id)
-        else:
-            messages.error(request, 'Problemas para modificar el ' + tituloA)
-            data["form"] = formulario
-
-    return render(request, 'orden/seguimiento/avance/avance_formulario.html', data)
+    except Exception as e:
+        # return JsonResponse({"error": '2'}, status=300)
+        return JsonResponse({"error": e.args}, status=300)
+        # return render(request, 'orsden/seguimiento/avance/avance_agregar.html',data)
 
 @login_required(login_url='login')
 def avance_eliminar(request, id):

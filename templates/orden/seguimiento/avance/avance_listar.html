@@ -1,7 +1,62 @@
-{% extends 'index.html' %} {% load static %} 
+{% extends 'index.html' %} {% load static %}
 {% block title %} {{ pageAccion }} de {{ pageTituloPlu }} {% endblock %}
 
 {% block content %}
+
+<script>
+    $(function(e) {
+
+        //LEVANTA MODAL - AGREGAR ORDEN
+        $('.btnAdd').on('click',function(){
+            //alert('add');
+
+            $('form')[0].reset();
+            $('input[name="id_avance"]').attr('value', 0);
+            //$('form[name="formAvance"]').attr('action', "{ % url 'avance_agregar' seguimiento.id  %}");
+        });
+    
+        //LEVANTA MODAL - MODIFICAR ORDEN
+        $('.btnEdit').on('click',function(){
+            //alert('edit');
+
+            $('form')[0].reset();
+            $('input[name="id_avance"]').attr('value', $(this).data('value'));            
+        });
+
+        //GUARDA ORDEN
+        $("#formAvance").submit(function (e) {
+            //alert($('#id_avance').val());
+            // alert($('#id_id_seguimiento').val());      
+            
+            e.preventDefault(); // preventing from page reload and default actions
+            
+            var serializedData = $(this).serialize(); // serialize the data for sending the form data.
+
+            $.ajax({
+                type: 'POST',
+                headers:{
+                    "X-CSRFToken": "{{csrf_token}}"
+                },
+                url: "{% url 'avance_add_edit' %}",
+                data: {
+                    id:$('#id_avance').val(),
+                    id_seguimiento: $('#id_id_seguimiento').val(),
+                    nombre: $('#id_nombre').val(),
+                    descripcion: $('#id_descripcion').val(),
+                },
+                success: function (response) {
+                    location.reload();
+                    //alert('ok');
+                },
+                error: function (response) {
+                    alert(response["responseJSON"]["error"]);
+                }
+            });
+            
+        });
+
+    });
+</script>
 
 <!-- NAVEGADOR -->
 <div class="row">
@@ -12,7 +67,7 @@
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Control</a></li>
                     <li class="breadcrumb-item active"><a href="{% url 'orden_listar' %}">Ordenes</a></li>
-                    <li class="breadcrumb-item active"><a href="{% url 'seguimiento_listar' orden.id %}">Seguimientos</a></li>                    
+                    <li class="breadcrumb-item active"><a href="{% url 'seguimiento_listar' orden.id %}">Seguimientos</a></li>
                     <li class="breadcrumb-item active">{{ pageAccion }} de {{ pageTituloPlu }}</li>
                     <li class="helpnav">
                         <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#top-rightmodal-ayuda" title="Ayuda">
@@ -20,7 +75,7 @@
                         </a>
                     </li>
                 </ol>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
@@ -32,11 +87,11 @@
             <div class="page-title-left" >
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item active" style="color: black;font-weight: bold;">
-                        <a href="{% url 'orden_listar' %}"> Orden: # {{ orden.id }}  - {{ orden.nombre }}</a> / 
+                        <a href="{% url 'orden_listar' %}"> Orden: # {{ orden.id }}  - {{ orden.nombre }}</a> /
                         <a href="{% url 'seguimiento_listar' orden.id %}">Seguimiento: # {{ seguimiento.id }} - {{ seguimiento.nombre }}</a>
                     </li>
                 </ol>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
@@ -61,11 +116,11 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">Usuario creador:</label>
-                                    {{ seguimiento.id_usuario_asignado }} 
+                                    {{ seguimiento.id_usuario_asignado }}
                                     <img src="{% static 'images/users/avatar-3.jpg' %}" alt="" class="avatar-xs rounded-circle">
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="firstNameinput" class="form-label">Usuario asignado:</label>
@@ -85,7 +140,7 @@
                                     {{ seguimiento.get_status_display }}
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="lastNameinput" class="form-label">Fecha tomado:</label>
@@ -111,12 +166,12 @@
                                 </div>
                             </div>
                         </div>
-                    
-                        
+
+
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <div class="col-xxl-2">
         <a href="" class="btn btn-warning add-btn">
             <i class="ri-close-line align-bottom me-1"></i> Cerrar seguimiento
@@ -133,7 +188,8 @@
                     <div class="row g-4 mb-3">
                         <div class="col-sm-auto">
                             <div>
-                                <a href="{% url 'avance_agregar' idSeguimiento=seguimiento.id %}" class="btn btn-info add-btn">
+                                <a class="btn btn-info add-btn btnAdd" data-bs-toggle="modal"
+                                    data-bs-target="#addAvancetModal" data-bs-whatever="@mdo">
                                     <i class="ri-add-line align-bottom me-1"></i> Agregar {{ pageTitulo }}
                                 </a>
                             </div>
@@ -147,23 +203,23 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="table-responsive table-card mt-3 mb-1">
                         <table class="table align-middle table-nowrap" id="customerTable">
                             <thead class="table-light">
                                 <tr>
                                     <th class="sort" data-sort="customer_name"># ID</th>
                                     <th class="sort" data-sort="customer_name">Nombre</th>
-                                    <th class="sort" data-sort="email">Descripción</th> 
+                                    <th class="sort" data-sort="email">Descripción</th>
                                     <th class="sort" data-sort="action">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody class="list form-check-all">
+                            <tbody class="list form-check-all tblData">
                                 {% for o in entity %}
                                 <tr>
                                     <th scope="row">{{ o.id }}</th>
                                     <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                    <td class="customer_name">{{ o.nombre | title}}</td>                                    
+                                    <td class="customer_name">{{ o.nombre | title}}</td>
                                     <td class="email">
                                         {{ o.descripcion | title | slice:":30" }}
                                         {% if o.descripcion|length > 30 %}
@@ -173,7 +229,10 @@
                                     <td>
                                         <div class="d-flex gap-2 float-end">
                                             <div class="edit">
-                                                <a href="{% url 'avance_modificar' o.id %}" class="btn btn-sm btn-warning edit-item-btn">Modificar</a>
+                                                <a class="btn btn-sm btn-info remove-item-btn btnEdit" data-bs-toggle="modal"
+                                                    data-bs-target="#addAvancetModal" data-bs-whatever="@mdo" data-value="{{ o.id }}" id="linkEdit">
+                                                        Modificar
+                                                </a>
                                             </div>
                                             <div class="remove">
                                                 <a href="{% url 'avance_eliminar' o.id %}" class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" onclick="return alertConfirmacion(event, 'este avance')">Eliminar</a>
@@ -204,7 +263,7 @@
                             {% include 'includes/paginator.html' %}
                             <!-- END PAGINATOR=================================================================== -->
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div><!-- end card -->
         </div>
@@ -213,8 +272,65 @@
     <!-- end col -->
 </div>
 
+<!-- MODALES -->
+<div class="modal fade" id="addAvancetModal" tabindex="-1" aria-labelledby="addAvancetModal" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="varyingcontentModalLabel">Agregar avance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" id="formAvance">
+                <div class="modal-body">
+                    <div class="row">
+                        {% csrf_token %}
+                        {% include 'includes/alerts.html' %}
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="firstNameinput" class="form-label">Nombre</label>
+                                {{ form.nombre }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="lastNameinput" class="form-label">Descripción</label>
+                                {{ form.descripcion }}
+                            </div>
+                        </div>
+                        {{ form.id_seguimiento }}
+                        <input type="hidden" name="id_avance" id="id_avance" value="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-start">
+                        <button type="button" class="btn btn-light " data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL AYUDA =================================================================== -->
-{% include 'includes/modal_ayuda.html' %} 
+{% include 'includes/modal_ayuda.html' %}
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
